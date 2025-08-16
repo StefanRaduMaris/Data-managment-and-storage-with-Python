@@ -1,16 +1,16 @@
 
 
-movie_list = []
 
-class movie():
+class Movie():
     def __init__(self,name,release_year,genre,imdb_address):
-        self.__name = name
-        self.__release_year = release_year
-        self.__genre = genre
-        self.__imdb_address = imdb_address
+        self.name = name
+        self.release_year = release_year
+        self.genre = genre
+        self.imdb_address = imdb_address
 
     def __str__(self):
-        return f'Name : {self.__name} Release year : {self.__release_year} Type : {self.__genre} \n IMDB : {self.__imdb_address}'
+        genre_str = ", ".join(self.genre)
+        return f'Name : {self.name} \n Release year : {self.release_year} Type : {genre_str} \n IMDB : {self.imdb_address}'
     
     @property
     def name(self):
@@ -22,7 +22,7 @@ class movie():
             self.__name = new_name
         else:
             raise TypeError('Name should be a string longer than 1 character')
-        return self.__name
+        
 
     @property
     def year(self):
@@ -34,19 +34,19 @@ class movie():
             self.__release_year = new_year
         else:
             raise TypeError('Year must be a pozitive integer')
-        return self.__release_year        
+      
 
     @property
     def genre(self):
         return self.__genre
     
     @genre.setter
-    def genre(self,new_genre):
-        if isinstance(new_genre,str) and len(new_genre) > 1:
+    def genre(self, new_genre):
+        if isinstance(new_genre, list) and all(isinstance(g, str) and len(g) > 0 for g in new_genre):
             self.__genre = new_genre
         else:
-            raise TypeError("Gender must be a string longer than 1 character")
-        return self.genre
+            raise TypeError("Genre must be a list of non-empty strings")
+        
 
     @property
     def imdb(self):
@@ -58,17 +58,42 @@ class movie():
             self.__imdb_address = new_imdb
         else :
             raise TypeError("IMDB address must be a string longer than 6 characters")
-        return self.__imdb_address
-    
-    def add_movie(self):
-        movie_name = input("Movie name :")
-        movie_year = input("Movie release year:")
-        movie_genre = input("Movie Gender:")
-        movie_imdb_address = input("Movie imdb link :")
-        new_movie = movie(movie_name , movie_year , movie_genre, movie_imdb_address)
-        movie_list.append(new_movie)
-
         
-    
     def display_info(self):
-        return print(self.__str__())
+        print(self.__str__())
+
+    @classmethod
+    def add_new_movie(cls):
+        while True:
+            name = input("Movie name: ")
+            try:
+                if not isinstance(name, str) or len(name) < 2:
+                    raise ValueError("Name must be at least 2 characters")
+                break
+            except ValueError as e:
+                print(e)
+
+        while True:
+            try:
+                year = int(input("Movie release year: "))
+                if year <= 0:
+                    raise ValueError("Year must be positive")
+                break
+            except ValueError as e:
+                print(e)
+
+        genres = []
+        while True:
+            g = input("Movie genre (Enter to finish): ")
+            if g == "":
+                break
+            genres.append(g)
+
+        while True:
+            imdb = input("Movie IMDB link: ")
+            if len(imdb) <= 6:
+                print("IMDB link must be longer than 6 characters")
+            else:
+                break
+
+        return cls(name, year, genres, imdb)
