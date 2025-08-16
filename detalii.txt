@@ -1,9 +1,0 @@
-
-
-    movies = [
-            Movie('The Shawshank Redemption',1994,'Epic,Drama','https://www.imdb.com/title/tt0111161/?ref_=sr_t_1'),
-            Movie('The Dark Knight',2008,"Action,Epic,Crime,Tragedy",'https://www.imdb.com/title/tt0468569/?ref_=sr_t_3'),
-            Movie('The Godfather',1972,"Crime,Drama",'https://www.imdb.com/title/tt0068646/?ref_=sr_t_2'),
-            Movie('Schindler s List',1993,'Docudrama','https://www.imdb.com/title/tt0108052/?ref_=sr_t_4')
-            ]    
-       
